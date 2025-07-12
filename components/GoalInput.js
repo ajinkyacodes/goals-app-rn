@@ -1,40 +1,48 @@
 import { useState } from 'react';
-import { StyleSheet, View, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Button, TextInput, Modal } from 'react-native';
 
 function GoalInput(props) {
+	const [enteredGoalText, setEnteredGoalText] = useState('');
 
-    const [enteredGoalText, setEnteredGoalText] = useState('');
-
-    function goalInputHandler(enteredText) {
+	function goalInputHandler(enteredText) {
 		setEnteredGoalText(enteredText);
 	}
 
-    function addGoalHandler() {
-        props.onAddGoal(enteredGoalText);
-        setEnteredGoalText('');
-    }
+	function addGoalHandler() {
+		props.onAddGoal(enteredGoalText);
+		setEnteredGoalText('');
+	}
 
 	return (
-		<View style={styles.inputContainer}>
-			<TextInput
-				style={styles.textInput}
-				placeholder='Your Course Goal!'
-				onChangeText={goalInputHandler}
-                value={enteredGoalText}
-			/>
-			<Button title='Add Goal' onPress={addGoalHandler} />
-		</View>
+		<Modal visible={props.visible} animationType='slide' >
+			<View style={styles.inputContainer}>
+				<TextInput
+					style={styles.textInput}
+					placeholder='Your Course Goal!'
+					onChangeText={goalInputHandler}
+					value={enteredGoalText}
+				/>
+                <View style={styles.buttonContainer}>
+                    <View style={styles.button}>
+                        <Button title='Add Goal' onPress={addGoalHandler} />
+                    </View>
+                    <View style={styles.button}>
+                        <Button title='Cancel' />
+                    </View>
+                </View>
+			</View>
+		</Modal>
 	);
 }
 
 export default GoalInput;
 
 const styles = StyleSheet.create({
-    inputContainer: {
+	inputContainer: {
 		flex: 1,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
+		justifyContent: 'center',
 		alignItems: 'center',
+        padding: 16,
 		marginBottom: 24,
 		borderBottomWidth: 1,
 		borderBottomColor: '#ccc',
@@ -42,8 +50,15 @@ const styles = StyleSheet.create({
 	textInput: {
 		borderWidth: 1,
 		borderBlockColor: '#ccc',
-		width: '70%',
-		marginRight: 8,
+		width: '100%',
 		padding: 10,
-	}
+	},
+    buttonContainer: {
+        marginTop: 16,
+        flexDirection: 'row'
+    },
+    button: {
+        width: 100,
+        marginHorizontal: 8
+    }
 });
