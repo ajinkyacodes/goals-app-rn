@@ -16,8 +16,11 @@ function GoalInput(props) {
 	}
 
 	function addGoalHandler() {
-		props.onAddGoal(enteredGoalText);
-		setEnteredGoalText('');
+        const trimmedGoalText = enteredGoalText.trim();
+        if(trimmedGoalText !== '') {
+            props.onAddGoal(enteredGoalText);
+            setEnteredGoalText('');
+        }
 	}
 
 	return (
@@ -26,7 +29,7 @@ function GoalInput(props) {
                 <Image style={styles.image} source={require('../assets/images/goal.png')} />
 				<TextInput
 					style={styles.textInput}
-					placeholder='Your Course Goal!'
+					placeholder='Your Goal!'
 					onChangeText={goalInputHandler}
 					value={enteredGoalText}
 				/>
